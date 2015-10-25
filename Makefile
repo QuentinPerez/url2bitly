@@ -1,5 +1,5 @@
 COMMANDS :=	$(addprefix ./,$(wildcard cmd/*))
-PACKAGES :=	
+PACKAGES :=	$(addprefix ./,$(wildcard pkg/*))
 VERSION :=	$(shell cat .goxc.json | jq -c .PackageVersion | sed 's/"//g')
 SOURCES :=	$(shell find . -name "*.go")
 

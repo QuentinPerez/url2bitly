@@ -4,6 +4,7 @@ import (
 	"os"
 	"path"
 
+	"github.com/QuentinPerez/url2bitly"
 	"github.com/Sirupsen/logrus"
 	"github.com/codegangsta/cli"
 )
@@ -24,16 +25,16 @@ func main() {
 			Name:  "debug, D",
 			Usage: "Enable debug mode",
 		},
+		cli.BoolFlag{
+			Name:  "expand, E",
+			Usage: "Expand bitly's URL",
+		},
 	}
 
 	app.Run(os.Args)
 }
 
 func action(c *cli.Context) {
-	if len(c.Args()) != 1 {
-		logrus.Fatalf("usage: %s [URL]", os.Args[0])
-	}
-
 	// setting up logrus
 	logrus.SetOutput(os.Stderr)
 	if c.Bool("debug") {
@@ -41,5 +42,13 @@ func action(c *cli.Context) {
 	} else {
 		logrus.SetLevel(logrus.InfoLevel)
 	}
+	if c.Bool("expand") {
+		url2bitly.Expand(c.Args())
+		return
+	}
 
+	// if len(c.Args()) != 1 {
+	// 	logrus.Fatalf("usage: %s [URL]", os.Args[0])
+	// }
+	// url2bitly.Upload(c.Args())
 }
