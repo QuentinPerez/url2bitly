@@ -42,6 +42,8 @@ func action(c *cli.Context) {
 	} else {
 		logrus.SetLevel(logrus.InfoLevel)
 	}
+	url2bitly.Init()
+
 	if c.Bool("expand") {
 		url2bitly.Expand(c.Args())
 		return
