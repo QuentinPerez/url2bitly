@@ -52,5 +52,5 @@ func action(c *cli.Context) {
 	// if len(c.Args()) != 1 {
 	// 	logrus.Fatalf("usage: %s [URL]", os.Args[0])
 	// }
-	// url2bitly.Upload(c.Args())
+	url2bitly.Upload(c.Args())
 }

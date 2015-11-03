@@ -39,8 +39,11 @@ func (api *API) GetResponse(resource ...string) ([]byte, error) {
 	if api.debug {
 		request = request.SetDebug(true)
 	}
-	_, body, errs := request.EndBytes()
+	resp, body, errs := request.EndBytes()
 
+	if resp.StatusCode != 200 {
+		return nil, errors.New(string(body))
+	}
 	if len(errs) != 0 {
 		return nil, printErrors(errs)
 	}

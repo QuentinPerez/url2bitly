@@ -14,6 +14,15 @@
 			"ImportPath": "github.com/codegangsta/cli",
 			"Comment": "1.2.0-161-gf445c89",
 			"Rev": "f445c894402839580d30de47551cedc152dad814"
+		},
+		{
+			"ImportPath": "github.com/parnurzeal/gorequest",
+			"Comment": "v0.2.9-3-gffc9fea",
+			"Rev": "ffc9fea4c59cbffe7e7b0841627848f74cdb087f"
+		},
+		{
+			"ImportPath": "golang.org/x/net/publicsuffix",
+			"Rev": "7654728e381988afd88e58cabfd6363a5ea91810"
 		}
 	]
 }

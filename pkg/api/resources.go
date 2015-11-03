@@ -15,5 +15,11 @@ type Expand struct {
 			GlobalHash string `json:"global_hash"`
 			Error      string `json:"error"`
 		} `json:"expand"`
+		LinkSave struct {
+			Link          string `json:"link"`
+			AggregateLink string `json:"aggregate_link"`
+			LongURL       string `json:"long_url"`
+			NewLink       int    `json:"new_link"`
+		} `json:"link_save"`
 	} `json:"data"`
 }
