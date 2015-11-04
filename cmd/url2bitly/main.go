@@ -4,8 +4,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/QuentinPerez/url2bitly"
-	"github.com/Sirupsen/logrus"
+	url2bitly "github.com/QuentinPerez/url2bitly/pkg/cli"
 	"github.com/codegangsta/cli"
 )
 
@@ -19,7 +18,7 @@ func main() {
 	app.Version = VERSION
 	app.Usage = "Convert your URLs to a bitly's URL"
 	app.ArgsUsage = "URL"
-	app.Action = action
+	app.Action = url2bitly.Start
 	app.Flags = []cli.Flag{
 		cli.BoolFlag{
 			Name:  "debug, D",
@@ -30,27 +29,22 @@ func main() {
 			Usage: "Expand bitly's URL",
 		},
 	}
-
 	app.Run(os.Args)
 }
 
-func action(c *cli.Context) {
-	// setting up logrus
-	logrus.SetOutput(os.Stderr)
-	if c.Bool("debug") {
-		logrus.SetLevel(logrus.DebugLevel)
-	} else {
-		logrus.SetLevel(logrus.InfoLevel)
-	}
-	url2bitly.Init()
+// func action(c *cli.Context) {
+// setting up logrus
 
-	if c.Bool("expand") {
-		url2bitly.Expand(c.Args())
-		return
-	}
-
-	// if len(c.Args()) != 1 {
-	// 	logrus.Fatalf("usage: %s [URL]", os.Args[0])
-	// }
-	url2bitly.Upload(c.Args())
-}
+// for _, cmd := range commands {
+//
+// }
+// if c.Bool("expand") {
+// 	url2bitly.Expand(c.Args())
+// 	return
+// }
+//
+// // if len(c.Args()) != 1 {
+// // 	logrus.Fatalf("usage: %s [URL]", os.Args[0])
+// // }
+// url2bitly.Upload(c.Args())
+// }
