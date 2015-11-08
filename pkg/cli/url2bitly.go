@@ -1,40 +1,55 @@
 package cli
 
 import (
+	"flag"
+	"fmt"
 	"os"
 
-	"github.com/QuentinPerez/url2bitly/pkg/api"
-	"github.com/Sirupsen/logrus"
-	"github.com/codegangsta/cli"
+	"github.com/QuentinPerez/url2bitly/pkg/command"
+	"github.com/docker/docker/pkg/mflag"
 )
 
-var bitlyAPI *api.API
+var (
+	flDebug = mflag.Bool([]string{"D", "-debug"}, false, "Enable debug mode")
+)
 
-func init() {
-	// bitlyAPI := api.NewAPI()
-}
-
-func Start(c *cli.Context) {
-	logrus.SetOutput(os.Stderr)
-	if c.Bool("debug") {
-		logrus.SetLevel(logrus.DebugLevel)
-	} else {
-		logrus.SetLevel(logrus.InfoLevel)
-	}
-	for _, cmd := range commands {
-		if c.Bool(cmd.GetName()) {
-			cmd.Do(c.Args())
+func Start(rawArgs []string, streams *command.Streams) (int, error) {
+	if streams == nil {
+		streams = &command.Streams{
+			Stdin:  os.Stdin,
+			Stdout: os.Stdout,
+			Stderr: os.Stderr,
 		}
 	}
-	// if c.Bool("expand") {
-	// 	url2bitly.Expand(c.Args())
-	// 	return
-	// }
+	if err := flag.CommandLine.Parse(rawArgs); err != nil {
+		return 1, fmt.Errorf("Start.Parse: %v", err)
+	}
+	if *flDebug {
+		os.Setenv("DEBUG", "1")
+	}
+	args := flag.Args()
+	if len(args) < 1 {
+		// CmdHelp.Exec(CmdHelp, []string{})
+		return 1, nil
+	}
+	// name := args[0]
+	args = args[1:]
+	for _, cmd := range commands {
+		cmd.streams = streams
+	}
+	return 0, nil
 
-	// if err := url2bitly.Start(); err != nil {
-	// 	logrus.Fatal(err)
+	// logrus.SetOutput(os.Stderr)
+	// if c.Bool("debug") {
+	// 	logrus.SetLevel(logrus.DebugLevel)
+	// } else {
+	// 	logrus.SetLevel(logrus.InfoLevel)
 	// }
-
+	// for _, cmd := range commands {
+	// if c.Bool(cmd.Name()) {
+	// 	cmd.Exec(cmd, c.Args())
+	// }
+	// }
 }
 
 // func Upload(urls []string) {

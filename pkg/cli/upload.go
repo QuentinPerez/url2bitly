@@ -1,17 +1,15 @@
 package cli
 
-import "github.com/QuentinPerez/url2bitly/pkg/command"
-
-type cmdUploadDefinition struct {
-	command.CommandBase
+var cmdUpload = &Command{
+	Exec:        runUpload,
+	UsageLine:   "upload URL",
+	Description: "",
+	Help:        "",
 }
 
-var cmdUpload cmdUploadDefinition
-
-func (up cmdUploadDefinition) GetName() string {
-	return "upload"
-}
-
-func (up cmdUploadDefinition) Do(Args []string) error {
+func runUpload(cmd *Command, rawArgs []string) error {
+	if len(rawArgs) == 0 {
+		return cmd.PrintUsage()
+	}
 	return nil
 }
