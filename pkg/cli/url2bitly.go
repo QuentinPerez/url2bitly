@@ -21,7 +21,7 @@ func Start(rawArgs []string, streams *command.Streams) (int, error) {
 			Stderr: os.Stderr,
 		}
 	}
-	if err := flag.CommandLine.Parse(rawArgs); err != nil {
+	if err := mflag.CommandLine.Parse(rawArgs); err != nil {
 		return 1, fmt.Errorf("Start.Parse: %v", err)
 	}
 	if *flDebug {
